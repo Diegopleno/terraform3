@@ -7,10 +7,6 @@ variable "ssh_key" {
 variable "instancia" {
   type = string
 }
-#variable "ambiente" {
-#  type = string
-#}
-
 variable "grupodeseguranca"{
   type = string
 }
@@ -23,23 +19,3 @@ variable "maximo" {
 variable "minimo" {
   type = number
 }
-/*
-variable "grupo_de_segurança" {
-  type = string
-  #default = ""
-}
-
-
-variable "ip_publico" {
-  type = string
-}
-
-variable "id_da_instancia" {
-  type = string
-}
-variable "grupo_de_segurança" {
-  type = string
-}
-variable "id_grupo_de_segurança" {
-  type = string
-}*/
