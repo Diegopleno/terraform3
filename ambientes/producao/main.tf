@@ -3,7 +3,8 @@ module "aws-prod" {
   regiao_aws = "us-east-1"
   instancia = "t2.micro"
   ssh_key = "chave-prod"
-  ambiente = "acesso-prod" #grupo_de_segurança = module.network.security_group_id_producao
+#  ambiente = "acesso-prod" #grupo_de_segurança = module.network.security_group_id_producao
+  grupodeseguranca = "producao"
 }
 
 output "ip_publico" {

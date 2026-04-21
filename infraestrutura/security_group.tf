@@ -1,6 +1,7 @@
 resource "aws_security_group" "acesso-dev" {
-    name = "acesso-dev"
-    description = "acesso squad desenvolvimento"
+    name = var.grupodeseguranca
+#    name = "acesso-dev"
+#    description = "acesso squad desenvolvimento"
     
     ingress{
         cidr_blocks = [ "0.0.0.0/0" ]
@@ -17,10 +18,10 @@ resource "aws_security_group" "acesso-dev" {
         protocol = "-1"
     }
     tags = {
-        name = "acesso-desenvolvimento"
+        name = "sg-acesso"
     }
 }
-
+/*
 resource "aws_security_group" "acesso-prod" {
     name = "acesso-prod"
     description = "acesso squad producao"
@@ -46,7 +47,7 @@ resource "aws_security_group" "acesso-prod" {
 locals {
   security_group_id = var.ambiente == "acesso-dev" ? aws_security_group.acesso-dev.id : aws_security_group.acesso-prod.id
 }
-
+*/
 
 /*
 output "security_group_id_desenvolvimento" {

@@ -7,10 +7,13 @@ variable "ssh_key" {
 variable "instancia" {
   type = string
 }
-variable "ambiente" {
+#variable "ambiente" {
+#  type = string
+#}
+
+variable "grupodeseguranca"{
   type = string
 }
-
 /*
 variable "grupo_de_segurança" {
   type = string

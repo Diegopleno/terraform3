@@ -3,7 +3,8 @@ module "aws-dev" {
   regiao_aws = "us-east-1"
   instancia = "t2.micro"
   ssh_key = "chave-dev"
-  ambiente = "acesso-dev"  
+#  ambiente = "acesso-dev"  
+  grupodeseguranca = "Desenvolvimento"
 }
 
 output "ip_publico" {

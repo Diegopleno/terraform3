@@ -13,15 +13,15 @@ provider "aws" {
   region = var.regiao_aws
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-0007e082d5009529b"
+resource "aws_launch_template" "maquina"{
+  image_id = "ami-0007e082d5009529b"
   instance_type = var.instancia
   key_name = var.ssh_key
-  /*vpc_security_group_ids = ["sg-0dbb42b8aeb1adb7d"]*/
-  vpc_security_group_ids = [local.security_group_id]
+#  vpc_security_group_ids = [local.security_group_id]
   tags = {
     Name = "Instância EC2"
   }
+  security_group_names = [ "var.grupodeseguranca" ]
 }
 
 resource "aws_key_pair" "ChaveSSH" {
