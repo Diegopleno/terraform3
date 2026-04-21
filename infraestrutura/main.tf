@@ -8,10 +8,10 @@ terraform {
 
   required_version = ">= 1.2"
 }
-
+/*
 provider "aws" {
   region = var.regiao_aws
-}
+}*/
 
 resource "aws_launch_template" "maquina"{
   image_id = "ami-0007e082d5009529b"
@@ -21,7 +21,7 @@ resource "aws_launch_template" "maquina"{
   tags = {
     Name = "Instância EC2"
   }
-  security_group_names = [ "var.grupodeseguranca" ]
+  security_group_names = [ var.grupodeseguranca ]
 }
 
 resource "aws_key_pair" "ChaveSSH" {
@@ -32,8 +32,20 @@ resource "aws_key_pair" "ChaveSSH" {
 #O output se chama 'ip_publico'
 #O valor é aws_instance.app_server.public_ip -> Aciona-chama-grava diretamente o recurso da AWS no output
 #No main.tf dentro do desenvolvimento iremos chamar o output = 'ip_publico'
-output "ip_publico" {
+/*output "ip_publico" {
     value = aws_instance.app_server.public_ip
+}*/
+
+resource "aws_autoscaling_group" "grupo" {
+  availability_zones = [ "${var.regiao_aws}a" ]
+  name = var.nomegrupo
+  max_size = var.maximo
+  min_size = var.minimo
+  launch_template {
+    id = aws_launch_template.maquina.id
+    version = "$Latest"
+#    version = aws_launch_template.maquina.latest_version
+  }
 }
 
 /*

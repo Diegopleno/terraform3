@@ -4,9 +4,14 @@ module "aws-prod" {
   instancia = "t2.micro"
   ssh_key = "chave-prod"
 #  ambiente = "acesso-prod" #grupo_de_segurança = module.network.security_group_id_producao
+  nomegrupo = "prod"
+  minimo = 1
+  maximo = 10
   grupodeseguranca = "producao"
 }
 
+
+/*
 output "ip_publico" {
   value = module.aws-prod.ip_publico
 }

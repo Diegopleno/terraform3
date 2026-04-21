@@ -4,6 +4,9 @@ module "aws-dev" {
   instancia = "t2.micro"
   ssh_key = "chave-dev"
 #  ambiente = "acesso-dev"  
+  nomegrupo = "dev"
+  minimo = 0
+  maximo = 1
   grupodeseguranca = "Desenvolvimento"
 }
 
