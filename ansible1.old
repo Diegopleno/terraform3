@@ -1,0 +1,53 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Atualizando cache e instalando pacotes básicos
+      apt:
+        name:
+          - python3
+          - python3-venv
+          - python3-pip
+          - git
+        update_cache: yes
+        state: present
+
+    - name: Clonando repositório
+      ansible.builtin.git:
+        repo: https://github.com/alura-cursos/clientes-leo-api.git
+        dest: /home/ubuntu/tcc
+        version: master
+        force: yes
+
+    - name: Criando virtualenv
+      command: python3 -m venv /home/ubuntu/tcc/virtualenv
+
+    - name: Instalando setuptools no virtualenv
+      pip:
+        virtualenv: /home/ubuntu/tcc/virtualenv
+        name: setuptools
+        state: present
+
+    - name: Instalando dependências do projeto
+      pip:
+        virtualenv: /home/ubuntu/tcc/virtualenv
+        requirements: /home/ubuntu/tcc/requirements.txt
+
+    - name: Ajustando ALLOWED_HOSTS
+      lineinfile:
+        path: /home/ubuntu/tcc/setup/settings.py
+        regex: '^ALLOWED_HOSTS.*'
+        line: 'ALLOWED_HOSTS = ["*"]'
+
+    - name: Executando migrações do banco
+      command: /home/ubuntu/tcc/virtualenv/bin/python /home/ubuntu/tcc/manage.py migrate
+
+    - name: Carregando dados iniciais
+      command: /home/ubuntu/tcc/virtualenv/bin/python /home/ubuntu/tcc/manage.py loaddata clientes.json
+
+    - name: Iniciando servidor Django em background
+      shell: |
+        cd /home/ubuntu/tcc
+        nohup /home/ubuntu/tcc/virtualenv/bin/python manage.py runserver 0.0.0.0:8000 > django.log 2>&1 &
+      async: 10
+      poll: 0
